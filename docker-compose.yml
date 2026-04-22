@@ -48,9 +48,10 @@ services:
         condition: service_started
     healthcheck:
       test: ["CMD-SHELL", "curl -f http://localhost:8000/health || exit 1"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
+      interval: 15s
+      timeout: 10s
+      retries: 10
+      start_period: 60s
 
   init-rag:
     build:

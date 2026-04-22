@@ -14,12 +14,9 @@ GROQ_MODEL = os.getenv("GROQ_MODEL", "llama-3.3-70b-versatile")
 # Chargement du modèle d'embeddings (une seule fois au démarrage)
 embedding_model = SentenceTransformer("all-MiniLM-L6-v2")
 
-# Connexion ChromaDB
-chroma_client = chromadb.HttpClient(host=CHROMA_HOST, port=CHROMA_PORT)
-collection = chroma_client.get_or_create_collection(
-    name="rh_documents",
-    metadata={"hnsw:space": "cosine"}
-)
+# Connexion ChromaDB (lazy)
+chroma_client = None
+collection = None
 
 # Client Groq
 groq_client = Groq(api_key=GROQ_API_KEY)
@@ -32,13 +29,24 @@ ROLE_ACCESS = {
 }
 
 
+def get_collection():
+    global chroma_client, collection
+    if collection is None:
+        chroma_client = chromadb.HttpClient(host=CHROMA_HOST, port=CHROMA_PORT)
+        collection = chroma_client.get_or_create_collection(
+            name="rh_documents",
+            metadata={"hnsw:space": "cosine"}
+        )
+    return collection
+
+
 def get_relevant_chunks(question: str, user_role: str, n_results: int = 6) -> list:
     """Recherche les chunks pertinents dans ChromaDB filtrés par rôle."""
     allowed_roles = ROLE_ACCESS.get(user_role, ["employee"])
 
     query_embedding = embedding_model.encode(question).tolist()
 
-    results = collection.query(
+    results = get_collection().query(
         query_embeddings=[query_embedding],
         n_results=n_results,
         where={"role": {"$in": allowed_roles}},
@@ -102,7 +110,7 @@ def call_groq(system_prompt: str, question: str) -> str:
                 {"role": "system", "content": system_prompt},
                 {"role": "user", "content": question}
             ],
-            temperature=0.2,
+            temperature=0.1,
             max_tokens=1024,
             top_p=0.9
         )
