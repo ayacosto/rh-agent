@@ -69,9 +69,8 @@ Le filtrage est appliqué directement au niveau de la **requête ChromaDB** — 
 
 ## Lancer le projet
 
-```bash
-cp .env.example .env
-# Remplir GROQ_API_KEY, SECRET_KEY, POSTGRES_PASSWORD
+
+# Remplir GROQ_API_KEY, SECRET_KEY, POSTGRES_PASSWORD dans .env
 
 docker compose up -d
 ```
