@@ -1,6 +1,6 @@
-# 🤖 RH-Agent
+# RH-Agent
 
-Un chatbot RH interne basé sur le RAG (Retrieval-Augmented Generation) qui répond aux questions des employés à partir des documents officiels de l'entreprise — avec **contrôle d'accès par rôle**.
+Un chatbot RH interne basé sur le RAG (Retrieval-Augmented Generation) qui répond aux questions des employés à partir des documents officiels de l'entreprise avec **contrôle d'accès par rôle**.
 
 ![Page de connexion](screenshots/page_connexion.png)
 
@@ -31,7 +31,7 @@ Le filtrage est appliqué directement au niveau de la **requête ChromaDB** — 
 
 ## Démonstration
 
-### ✅ Tous les rôles — Heures supplémentaires
+### Tous les rôles — Heures supplémentaires
 
 > *« Quel est le taux de majoration des heures supplémentaires de la 36ème à la 43ème heure ? »*
 
@@ -41,7 +41,7 @@ Le filtrage est appliqué directement au niveau de la **requête ChromaDB** — 
 
 ---
 
-### 🔒 Manager + RH uniquement — Primes exceptionnelles
+### Manager + RH uniquement — Primes exceptionnelles
 
 > *« Quelles sont les conditions des primes exceptionnelles ? »*
 
@@ -51,7 +51,7 @@ Le filtrage est appliqué directement au niveau de la **requête ChromaDB** — 
 
 ---
 
-### 🔐 RH uniquement — Médecin du travail
+### RH uniquement — Médecin du travail
 
 > *« Quel est le contact du médecin du travail ? »*
 
